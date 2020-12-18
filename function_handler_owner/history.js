@@ -23,40 +23,45 @@ module.exports = async (agent) => {
     courses.map((course) => {
       contents.push(linePayload.listHistory(course.courseName, course.date));
     });
-
-    const payloadJson = lineHelper.createFlexCarouselMessage("List Course", contents);
-    payloadJson.quickReply = {
-      items: [
-        {
-          action: {
-            label: "สร้างคอร์ส",
-            text: "สร้างคอร์ส",
-            type: "message",
+    if (!Array.isArray(contents) || !contents.length) {
+      const payloadJson = linePayload.askTodoAnything();
+      let payload = new Payload(`LINE`, payloadJson, { sendAsMessage: true });
+      agent.add("คุณยังไม่เคยสมัครคอร์สอะไรนะ");
+      agent.add(payload);
+    } else {
+      const payloadJson = lineHelper.createFlexCarouselMessage("List Course", contents);
+      payloadJson.quickReply = {
+        items: [
+          {
+            action: {
+              label: "สร้างคอร์ส",
+              text: "สร้างคอร์ส",
+              type: "message",
+            },
+            type: "action",
           },
-          type: "action",
-        },
-        {
-          type: "action",
-          action: {
-            text: "เช็คชื่อ",
-            label: "เช็คชื่อ",
-            type: "message",
+          {
+            type: "action",
+            action: {
+              text: "เช็คชื่อ",
+              label: "เช็คชื่อ",
+              type: "message",
+            },
           },
-        },
-        {
-          action: {
-            label: "ส่งแบบสอบถาม",
-            type: "message",
-            text: "ส่งแบบสอบถาม",
+          {
+            action: {
+              label: "ส่งแบบสอบถาม",
+              type: "message",
+              text: "ส่งแบบสอบถาม",
+            },
+            type: "action",
           },
-          type: "action",
-        },
-      ],
-    };
-    let payload = new Payload(`LINE`, payloadJson, { sendAsMessage: true });
-    agent.add("คอร์สทั้งหมดที่คุณเคยสร้างไปแล้วนะ");
-    agent.add(payload);
-
+        ],
+      };
+      let payload = new Payload(`LINE`, payloadJson, { sendAsMessage: true });
+      agent.add("คอร์สทั้งหมดที่คุณเคยสร้างไปแล้วนะ");
+      agent.add(payload);
+    }
     //agent.add("test");
   } catch (error) {
     console.log(error);
