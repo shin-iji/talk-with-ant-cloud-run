@@ -1,7 +1,9 @@
 "use strict";
 
-const functions = require("firebase-functions");
+const express = require("express");
+const bodyParser = require("body-parser");
 const { WebhookClient } = require("dialogflow-fulfillment");
+const app = express().use(bodyParser.json());
 //const { Card, Suggestion } = require("dialogflow-fulfillment");
 
 process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
@@ -35,7 +37,7 @@ const listParticipant = require("./function_handler_owner/list-attend");
 
 const test = require("./function_handler/test");
 
-exports.antDialogflowFulfillment = functions.https.onRequest((request, response) => {
+app.post("/antDialogflowFulfillment", (request, response) => {
   const agent = new WebhookClient({ request, response });
   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(request.body));
@@ -59,7 +61,15 @@ exports.antDialogflowFulfillment = functions.https.onRequest((request, response)
   agent.handleRequest(intentMap);
 });
 
-exports.antOwnerDialogflowFulfillment = functions.https.onRequest((request, response) => {
+app.post("/antOwnerDialogflowFulfillment", (request, response) => {
+  // if (!request.body.queryResult.fulfillmentMessages) return;
+  // request.body.queryResult.fulfillmentMessages = request.body.queryResult.fulfillmentMessages.map(
+  //   (m) => {
+  //     if (!m.platform) m.platform = "PLATFORM_UNSPECIFIED";
+  //     return m;
+  //   }
+  // );
+  //console.log(request.body.queryResult.fulfillmentMessages);
   const agent = new WebhookClient({ request, response });
   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(request.body));
@@ -77,8 +87,11 @@ exports.antOwnerDialogflowFulfillment = functions.https.onRequest((request, resp
   agent.handleRequest(intentMap);
 });
 
-exports.twaApi = functions.https.onRequest(api);
+app.use("/api", api);
+app.use("/webhook", ant.webhook);
+app.use("/confirmPayment", confirmPayment);
 
-exports.twaWebhook = functions.https.onRequest(ant.webhook);
-
-exports.confirmPayment = functions.https.onRequest(confirmPayment);
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log("Server listening on port", port);
+});

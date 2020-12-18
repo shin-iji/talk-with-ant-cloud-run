@@ -1,7 +1,7 @@
 const { db, storage } = require("../../database/database");
 const { updateEntity } = require("../../helper/update-entity");
 const { updateEntityOwner } = require("../../helper/update-entity-owner");
-const bucket = storage.bucket();
+const bucket = storage.bucket("antv2-xdbgna.appspot.com");
 
 const getAllCourses = async (req, res) => {
   try {
@@ -47,29 +47,30 @@ const createCourse = async (req, res, next) => {
 
     const newDate = new Date(date);
 
+    console.log(req.body);
     await updateEntity(courseName);
     await updateEntityOwner(courseName);
 
-    const file = req.files[0];
+    // const file = req.files[0];
 
-    const fileName = `${courseName.split(" ").join("_")}`;
-    const fileUpload = bucket.file(fileName);
-    const blobStream = fileUpload.createWriteStream({
-      metadata: {
-        contentType: file.mimetype,
-      },
-    });
+    // const fileName = `${courseName.split(" ").join("_")}`;
+    // const fileUpload = bucket.file(fileName);
+    // const blobStream = fileUpload.createWriteStream({
+    //   metadata: {
+    //     contentType: file.mimetype,
+    //   },
+    // });
 
-    blobStream.on("error", (err) => {
-      res.status(405).json(err);
-    });
+    // blobStream.on("error", (err) => {
+    //   res.status(405).json(err);
+    // });
 
-    blobStream.on("finish", () => {
-      // res.status(200).send("Upload complete!");
-      return next();
-    });
+    // blobStream.on("finish", () => {
+    //   // res.status(200).send("Upload complete!");
+    //   return next();
+    // });
 
-    blobStream.end(file.buffer);
+    // blobStream.end(file.buffer);
 
     const data = {
       ownerId,

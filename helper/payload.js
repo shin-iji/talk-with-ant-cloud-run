@@ -278,7 +278,6 @@ module.exports = {
         items: [
           {
             type: "action",
-            //imageUrl: "https://cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-1-512.png",
             action: {
               type: "message",
               label: "รายการอบรม",
@@ -287,11 +286,26 @@ module.exports = {
           },
           {
             type: "action",
-            //imageUrl: "https://cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-1-512.png",
             action: {
               type: "message",
               label: "รายการที่ต้องจ่าย",
               text: "รายการที่ต้องจ่าย",
+            },
+          },
+          {
+            type: "action",
+            action: {
+              type: "message",
+              label: "ประวัติการสมัคร",
+              text: "ประวัติการสมัคร",
+            },
+          },
+          {
+            type: "action",
+            action: {
+              type: "message",
+              label: "ช่วยเหลือ",
+              text: "ช่วยเหลือ",
             },
           },
         ],
@@ -1655,6 +1669,22 @@ module.exports = {
             action: {
               label: "ส่งแบบสอบถาม",
               text: "ส่งแบบสอบถาม",
+              type: "message",
+            },
+          },
+          {
+            type: "action",
+            action: {
+              label: "รายชื่อผู้สมัคร",
+              text: "รายชื่อผู้สมัคร",
+              type: "message",
+            },
+          },
+          {
+            type: "action",
+            action: {
+              label: "ประวัติการสร้าง",
+              text: "ประวัติการสร้าง",
               type: "message",
             },
           },

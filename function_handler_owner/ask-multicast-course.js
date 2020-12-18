@@ -9,7 +9,7 @@ module.exports = async (agent) => {
     let courseId;
 
     const courseRef = db.collection("Training Courses");
-    const snapshot = await courseRef.where("courseName", "<=", courseName).get();
+    const snapshot = await courseRef.where("courseName", "==", courseName).get();
     snapshot.forEach((doc) => {
       courseId = doc.id;
     });
