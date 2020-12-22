@@ -2,18 +2,15 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const formData = require("express-form-data");
+const fileMiddleware = require("express-multipart-file-parser");
 
 const courses = require("./routes/routes");
 const owner = require("./routes/owner-routes");
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(fileMiddleware);
 app.use(cors());
-app.use(formData.parse());
-
-//exports.twaApi = functions.region("asia-northeast1").https.onRequest(app);
 
 app.get("/", (req, res) => {
   res.json({

@@ -47,30 +47,30 @@ const createCourse = async (req, res, next) => {
 
     const newDate = new Date(date);
 
-    console.log(req.body);
+    //console.log(req.body);
     await updateEntity(courseName);
     await updateEntityOwner(courseName);
 
-    // const file = req.files[0];
+    const file = req.files[0];
+    //console.log(file);
+    const fileName = `${courseName.split(" ").join("_")}`;
+    const fileUpload = bucket.file(fileName);
+    const blobStream = fileUpload.createWriteStream({
+      metadata: {
+        contentType: file.mimetype,
+      },
+    });
 
-    // const fileName = `${courseName.split(" ").join("_")}`;
-    // const fileUpload = bucket.file(fileName);
-    // const blobStream = fileUpload.createWriteStream({
-    //   metadata: {
-    //     contentType: file.mimetype,
-    //   },
-    // });
+    blobStream.on("error", (err) => {
+      res.status(405).json(err);
+    });
 
-    // blobStream.on("error", (err) => {
-    //   res.status(405).json(err);
-    // });
+    blobStream.on("finish", () => {
+      // res.status(200).send("Upload complete!");
+      return next();
+    });
 
-    // blobStream.on("finish", () => {
-    //   // res.status(200).send("Upload complete!");
-    //   return next();
-    // });
-
-    // blobStream.end(file.buffer);
+    blobStream.end(file.buffer);
 
     const data = {
       ownerId,
@@ -83,6 +83,7 @@ const createCourse = async (req, res, next) => {
       trainerName,
       maxPar: Number(maxPar),
       avaiPar: Number(maxPar),
+      checkAttend: false,
     };
 
     const courseRef = await db.collection("Training Courses").doc().set(data);

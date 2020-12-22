@@ -14,6 +14,7 @@ module.exports = async (agent) => {
     await userRef
       .doc(`${userId}`)
       .collection("history")
+      .orderBy("date", "asc")
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {

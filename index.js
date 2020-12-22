@@ -62,14 +62,6 @@ app.post("/antDialogflowFulfillment", (request, response) => {
 });
 
 app.post("/antOwnerDialogflowFulfillment", (request, response) => {
-  // if (!request.body.queryResult.fulfillmentMessages) return;
-  // request.body.queryResult.fulfillmentMessages = request.body.queryResult.fulfillmentMessages.map(
-  //   (m) => {
-  //     if (!m.platform) m.platform = "PLATFORM_UNSPECIFIED";
-  //     return m;
-  //   }
-  // );
-  //console.log(request.body.queryResult.fulfillmentMessages);
   const agent = new WebhookClient({ request, response });
   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(request.body));

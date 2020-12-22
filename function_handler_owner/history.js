@@ -33,28 +33,44 @@ module.exports = async (agent) => {
       payloadJson.quickReply = {
         items: [
           {
+            type: "action",
             action: {
-              label: "สร้างคอร์ส",
               text: "สร้างคอร์ส",
               type: "message",
+              label: "สร้างคอร์ส",
             },
-            type: "action",
           },
           {
-            type: "action",
             action: {
-              text: "เช็คชื่อ",
               label: "เช็คชื่อ",
               type: "message",
+              text: "เช็คชื่อ",
+            },
+            type: "action",
+          },
+          {
+            type: "action",
+            action: {
+              label: "ส่งแบบสอบถาม",
+              text: "ส่งแบบสอบถาม",
+              type: "message",
             },
           },
           {
-            action: {
-              label: "ส่งแบบสอบถาม",
-              type: "message",
-              text: "ส่งแบบสอบถาม",
-            },
             type: "action",
+            action: {
+              label: "รายชื่อผู้สมัคร",
+              text: "รายชื่อผู้สมัคร",
+              type: "message",
+            },
+          },
+          {
+            type: "action",
+            action: {
+              label: "ประวัติการสร้าง",
+              text: "ประวัติการสร้าง",
+              type: "message",
+            },
           },
         ],
       };
