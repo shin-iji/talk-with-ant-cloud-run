@@ -113,7 +113,7 @@ exports.webhook = async (req, res) => {
         ]);
       } else {
         await reply(channelAccessToken, events.replyToken, [
-          lineHelper.createTextMessage("ส่งเช็คชื่อเรียบร้อย สามารถเช็คยอดได้ที่ปุ่มเลยนะ"),
+          lineHelper.createTextMessage("ส่งเช็คชื่อเรียบร้อย สามารถดูรายชื่อได้ที่ปุ่มเลยนะ"),
           linePayload.countAttend(courseId, courseName),
         ]);
       }

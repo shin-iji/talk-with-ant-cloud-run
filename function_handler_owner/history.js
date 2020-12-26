@@ -16,12 +16,16 @@ module.exports = async (agent) => {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          courses.push({ courseName: doc.data().courseName, date: doc.data().date });
+          courses.push({
+            courseId: doc.id,
+            courseName: doc.data().courseName,
+            date: doc.data().date,
+          });
         });
       });
 
     courses.map((course) => {
-      contents.push(linePayload.listHistory(course.courseName, course.date));
+      contents.push(linePayload.listHistoryOwner(course.courseId, course.courseName, course.date));
     });
     if (!Array.isArray(contents) || !contents.length) {
       const payloadJson = linePayload.askTodoAnything();
