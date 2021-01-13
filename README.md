@@ -16,10 +16,7 @@ Talk with Ant is a chatbot that will assist in the registration of various train
 git clone [Git URL]
 ```
 ```
-cd talk-with-ant
-```
-```
-cd functions
+cd talk-with-ant-cloud-run
 ```
 ```
 npm install
@@ -28,23 +25,7 @@ npm install
 ## Development
 1. Start the cloud function server.
 ```
-cd functions
-```
-```
-npm run serve
-```
-2. Open the local port to the local machine for webhook.
-* Windows
-```
-ngrok http 5001
-```
-* MacOS
-```
-./ngrok http 5001
-```
-3.Edit the dialogflow fulfillment and line developer webhook for Dev agent to ngrok path
-```
-https://xxxxxx.ngrok.io/{project Id}/{region}/{function name}
+npm start
 ```
 
 ## RESTful API
