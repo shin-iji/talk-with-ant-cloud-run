@@ -41,7 +41,7 @@ npm start
 ## Deployment
 
 ```
-cd functions
+npm run build
 ```
 ```
 npm run deploy
